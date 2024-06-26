@@ -1,5 +1,6 @@
-package entity;
+package com.witcher.e_commerce.application.witcher.entity;
 
+import com.witcher.e_commerce.application.witcher.service.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -14,7 +15,7 @@ public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(name = "username")
     @NotNull(message = "is required")
@@ -39,7 +40,7 @@ public class User {
     @NotNull(message = "is required")
     private String email;
 
-    @Column(name = "lastname")
+    @Column(insertable=false, updatable=false)
     @NotNull(message = "is required")
     @Size(min = 6, message = "is required")
     private String password;
@@ -54,11 +55,25 @@ public class User {
     @Size(min = 6, message = "is required")
     private int pincode;
 
-    @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(name = "status")
-    private String status;
+    private Boolean status;
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
 }

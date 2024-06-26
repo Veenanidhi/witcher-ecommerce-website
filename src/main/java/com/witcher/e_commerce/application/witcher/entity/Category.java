@@ -1,4 +1,4 @@
-package entity;
+package com.witcher.e_commerce.application.witcher.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
