@@ -1,23 +1,29 @@
 package com.witcher.e_commerce.application.witcher.service;
 
 import com.witcher.e_commerce.application.witcher.entity.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
 
-import java.util.List;
+public interface UserService{
 
-public interface UserService extends UserDetailsService {
+    User registerUser(User user);
 
     User findById(Long id);
-
-    void save(User user);
-
-    void saveUp(User user);
-
-    List<User> findAll();
 
     void deleteById(Long id);
 
     User findByUsername(String username);
 
+    Boolean existsByUsername(String username);
 
+
+    void verifyOtp(String number);
+
+    void save(User user, String token);
+
+    VerificationToken findByToken(String token);
+
+    VerificationToken findByUser(User user);
+
+
+    void save(User user);
 }

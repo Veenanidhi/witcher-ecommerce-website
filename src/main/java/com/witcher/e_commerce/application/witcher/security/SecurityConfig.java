@@ -15,14 +15,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
- //   @Bean
-  //  public DaoAuthenticationProvider authenticationProvider(UserService userService){
-     //   DaoAuthenticationProvider auth=new DaoAuthenticationProvider();
-    //    auth.setUserDetailsService((UserDetailsService) userService);
-   //     auth.setPasswordEncoder(bCryptPasswordEncoder());
-
-  //      return auth;
- //   }
 
     @Bean
     public WebSecurityCustomizer securityCustomizer(){
@@ -54,4 +46,6 @@ public class SecurityConfig {
         return http.build();
 
     }
+
+
 }

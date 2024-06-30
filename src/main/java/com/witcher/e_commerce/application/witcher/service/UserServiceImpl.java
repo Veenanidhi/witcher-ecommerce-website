@@ -1,26 +1,39 @@
 package com.witcher.e_commerce.application.witcher.service;
 
 import com.witcher.e_commerce.application.witcher.dao.UserRepository;
+import com.witcher.e_commerce.application.witcher.dao.VerificationTokenRepository;
 import com.witcher.e_commerce.application.witcher.entity.User;
+import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class UserServiceImpl implements UserService{
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+    private final VerificationTokenRepository tokenRepository;
+
+    private EmailService emailService;
+
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository,BCryptPasswordEncoder bCryptPasswordEncoder){
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder, VerificationTokenRepository tokenRepository, EmailService emailService){
         this.userRepository=userRepository;
-        this.bCryptPasswordEncoder=bCryptPasswordEncoder;
+        this.passwordEncoder=bCryptPasswordEncoder;
+        this.tokenRepository = tokenRepository;
+        this.emailService=emailService;
+
     }
 
     @Override
@@ -34,36 +47,101 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void save(User user) {
+    public User registerUser(User user) {
 
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (userRepository.count() >1){
+            user.setRole(Role.ROLE_USER);
+        }
+      else{
+          user.setRole(Role.ROLE_ADMIN);
+        }
+         userRepository.save(user);
 
-        user.setRole(Role.valueOf("ROLE_USER"));
-        userRepository.save(user);
+      User user1=new User();
+      //to disable new user before activation
+      user1.setEnabled(false);
+
+      Optional<User> saved= Optional.of(save(user1));
+
+      //create and save verificatio token if the user is saved
+        saved.isPresent(u->{
+            try{
+                String token= UUID.randomUUID().toString();
+                VerificationToken verificationToken = new VerificationToken(token, saved.get());
+                tokenRepository.save(verificationToken);
+
+                //send verification email
+                emailService.sendHtmlMail();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+
+        return saved.get();
     }
 
-    @Override
-    public void saveUp(User user) {
-
-    }
-
-    @Override
-    public List<User> findAll() {
-        return null;
-    }
 
     @Override
     public void deleteById(Long id) {
-
+      userRepository.deleteById(id);
     }
 
     @Override
     public User findByUsername(String username) {
-        return null;
+        return userRepository.findByUsername(username).orElseThrow();
+
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public Boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
+
+    @Override
+    public void verifyOtp(String number) {
+
+    }
+
+
+    @Transactional
+    public VerificationToken findByToken(String token){
+        return tokenRepository.findByToken(token);
+    }
+    @Transactional
+    public VerificationToken findByUser(User user){
+        return tokenRepository.findByUser(user);
+    }
+
+    @Override
+    public String save(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public void save(User user, String token) {
+        VerificationToken verificationToken=new VerificationToken(token, user);
+        //set expiry date to 24 hrs
+        verificationToken.setExpiryDate(calculatedExpiryDate(24*60));
+        tokenRepository.save(verificationToken);
+
+    }
+
+    //calculate expiry date
+    private Timestamp calculatedExpiryDate(int expiryTimeInMinutes){
+        Calendar calendar= Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, expiryTimeInMinutes);
+        return new Timestamp(calendar.getTime().getTime());
+    }
+
+
+
+
+
+
+
+
+
+
 }

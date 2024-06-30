@@ -144,7 +144,7 @@
                 
 
             <h2 class="text-sm font-sans mb-3">Sign Up</h2>
-            <form th:action="@{/signup/processSignUpPage}" th:object="${webUser}" method="post" class="space-y-4">
+            <form th:action="@{/processSignUpPage}" th:object="${webUser}" method="post" class="space-y-4">
                 <!-- User name -->
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
@@ -175,22 +175,23 @@
                     <input type="password" id="password" name="password" required
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 </div>
-                <!-- Confirm password -->
+                <!-- Confirm password
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
                     <input type="password" th:field="*{email}" id="confirm password" name="confirm password" required
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 </div>
+
                 <div th:if="${#fields.hasErrors('password')}"
-                     style="margin-bottom: 25px" class="text-danger">
+                     style=" margin-bottom: 25px" class="text-danger">
                     <ul>
                         <li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}" />
                     </ul>
-                </div>
+                </div>-->
                 <!-- number -->
                 <div>
                     <label for="number" class="block text-sm font-medium text-gray-700">Phone number(optional)</label>
-                    <input type="number" th:field="*{number}" id="number" name="number"
+                    <input type="number" th:field="*{phone_no}" id="number" name="number"
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 </div>
                 <!-- Submit button -->

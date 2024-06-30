@@ -22,38 +22,20 @@ public class User {
     @Size(min = 4, message = "is required")
     private String username;
 
-    @Column(name = "firstname")
-    @NotNull(message = "is required")
-    @Size(min = 4, message = "is required")
-    private String firstname;
-
-    @Column(name = "lastname")
-    @NotNull(message = "is required")
-    @Size(min = 1, message = "is required")
-    private String lastname;
-
-    @Column(name = "dob")
-    @NotNull(message = "is required")
-    private Date dob;
 
     @Column(name = "email")
     @NotNull(message = "is required")
     private String email;
 
-    @Column(insertable=false, updatable=false)
+    @Column
     @NotNull(message = "is required")
     @Size(min = 6, message = "is required")
     private String password;
 
     @Column(name = "phone_no")
-    @NotNull(message = "is required")
-    @Size(min = 1, message = "is required")
+    @Size(min = 10,max = 10 ,message = "is required")
     private String phone_no;
 
-    @Column(name = "pincode")
-    @NotNull(message = "is required")
-    @Size(min = 6, message = "is required")
-    private int pincode;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -78,5 +60,15 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    private boolean enabled;
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
     }
 }

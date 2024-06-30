@@ -2,66 +2,60 @@ package com.witcher.e_commerce.application.witcher.controller;
 
 import com.witcher.e_commerce.application.witcher.entity.User;
 import com.witcher.e_commerce.application.witcher.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class SignUpController {
+public class AuthController {
 
-    private UserService userService;
+
+    private final UserService userService;
 
     @Autowired
-    public SignUpController(UserService userService){
+    public AuthController(UserService userService){
         this.userService=userService;
     }
 
-    @InitBinder
-    public void InitBinder(WebDataBinder dataBinder){
 
-        StringTrimmerEditor stringTrimmerEditor=new StringTrimmerEditor(true);
-
-        dataBinder.registerCustomEditor(String.class,stringTrimmerEditor);
+    @GetMapping("/login")
+    private String login(){
+        return "login";
     }
 
     @GetMapping("/signup")
     public String signUpController(Model model){
         model.addAttribute("webUser", new User());
-
+        userService.verifyOtp("1234");
         return "signup";
 
     }
 
     @PostMapping("/processSignUpPage")
     public String processSignUpPage(
-            @Valid @ModelAttribute("webUser") User theWebUser,
-            BindingResult theBindingResult,
+            @ModelAttribute("webUser") User theWebUser,
+            BindingResult theBindingResult, RedirectAttributes ra,
             Model theModel
     ){
-        //form validation
-        if (theBindingResult.hasErrors()){
-            return "signup";
-        }
+
 
         //to check the username is already taken
-        User existingUser=userService.findByUsername(theWebUser.getUsername());
-        if (existingUser!=null){
+        Boolean existingUser=userService.existsByUsername(theWebUser.getUsername());
+        if (existingUser){
             theModel.addAttribute("webUser",new User());
             theModel.addAttribute("signupError","Username already exists!!!");
-            return "landing";
+            return "redirect:/signup";
         }
 
         //save the new user
-        userService.save(theWebUser);
-        return "landing";
+        userService.registerUser(theWebUser);
+        ra.addFlashAttribute("message","an activation mail is send to ur mail");
+        return "redirect:/login";
     }
 
 }
