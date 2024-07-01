@@ -8,6 +8,10 @@ public class ECommerceApplicationWitcherApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ECommerceApplicationWitcherApplication.class, args);
+
+
+
+
 	}
 
 }

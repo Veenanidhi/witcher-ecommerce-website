@@ -62,24 +62,22 @@ public class UserServiceImpl implements UserService{
       //to disable new user before activation
       user1.setEnabled(false);
 
-      Optional<User> saved= Optional.of(save(user1));
+        Optional<User> saved = Optional.of(user1);
 
-      //create and save verificatio token if the user is saved
-        saved.isPresent(u->{
-            try{
-                String token= UUID.randomUUID().toString();
+// Create and save verification token if the user is saved
+        saved.ifPresent(u -> {
+            try {
+                String token = UUID.randomUUID().toString();
                 VerificationToken verificationToken = new VerificationToken(token, saved.get());
                 tokenRepository.save(verificationToken);
 
-                //send verification email
-                emailService.sendHtmlMail();
-
-            }catch (Exception e){
+                // Send verification email
+                emailService.sendHtmlMail(u);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
-
-        return saved.get();
+        return user1;
     }
 
 
@@ -115,7 +113,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String save(User user) {
+    public void save(User user) {
         userRepository.save(user);
     }
 

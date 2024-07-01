@@ -20,6 +20,7 @@ public class EmailService {
     private final TemplateEngine templateEngine;
 
     private final JavaMailSender javaMailSender;
+    public Object sendHtmlMail;
 
     @Autowired
     public EmailService(VerificationTokenRepository verificationTokenRepository, TemplateEngine templateEngine, JavaMailSender javaMailSender) {

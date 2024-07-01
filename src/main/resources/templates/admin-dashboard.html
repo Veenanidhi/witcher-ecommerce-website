@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" data-th-href="@{'/css/style.css'}">
+</head>
+<body>
+   <div class="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-flex">
+            <img src="img/logo.png" width="30px" alt="">
+            <div class="brand-icons">
+                <span class="las-la-bell"></span>
+                <span class="las-la-user-circle"></span>
+            </div>
+        </div>
+        <!--Dashboard sidebar-->
+    </div>
+          <div class="sidebar-main">
+            <div class="sidebar-user">
+                <img src="img/sarah.png" alt="">
+                <div>
+                    <h3>Sarah Johnson</h3>
+                    <span>sarahjohnson@gmail.com</span>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-block">
+                    <div class="menu-head">
+                     <span>Dashboard</span>
+                </div>
+                <ul>
+                    <li>
+                        <a href="">
+                            <span class="las la-balance-scale"></span>
+                            Products
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="las la-chart-pie"></span>
+                             Category
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="las la-chart-pie"></span>
+                             Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="las la-chart-pie"></span>
+                            Coupon
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="las la-chart-pie"></span>
+                             Banner
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span class="las la-chart-pie"></span>
+                             Transaction
+                        </a>
+                    </li>
+                </ul>
+                 <!--sidebar heading-->
+                <div class="menu-head">
+                    <span>User Management</span>
+               </div>
+               <ul>
+                   <li>
+                       <a href="">
+                           <span class="las la-calendar"></span>
+                           Manage Admins
+                       </a>
+                   </li>
+                   <li>
+                       <a href="">
+                           <span class="las la-users"></span>
+                            Customers
+                       </a>
+                   </li>
+               </ul>
+            <!--sidebar heading-->
+               <div class="menu-head">
+                <span>Others</span>
+           </div>
+           <ul>
+               <li>
+                   <a href="">
+                       <span class="las la-calendar"></span>
+                       Settings  
+                   </a>
+               </li>
+               <li>
+                   <a href="">
+                       <span class="las la-users"></span>
+                        Help
+                   </a>
+               </li>
+               <li>
+                <a href="">
+                    <span class="las la-users"></span>
+                     Logout
+                </a>
+            </li>
+           </ul>
+            </div>
+            </div>
+          </div>
+   </div>
+
+   <!--main body-->
+   <div class="main-content">
+    <header>
+      <!--nav portion look later-->  
+    </header>
+    <main>
+        <div class="page-header">
+            <div>
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </main>
+
+    <div class="cards">
+        <div class="cards-single">
+            <div class="card-flex">
+             <div class="card-info">
+                 <div class="card-head">
+                    <span>Todays Sale</span>
+                 </div>
+                 <h2>100,000</h2>
+                 <small>we have sold 100,000 items</small>
+             </div>
+             <div class="card-chart">
+                <span class="las la-chart-line"></span>
+             </div>
+            </div>
+           
+        </div>
+
+        <div class="cards-single">
+            <div class="card-flex">
+             <div class="card-info">
+                 <div class="card-head">
+                    <span>Todays Revenue</span>
+                 </div>
+                 <h2>10,000,00</h2>
+                 <small>profit made so today so far</small>
+             </div>
+             <div class="card-chart">
+                <span class="las la-chart-line"></span>
+             </div>
+            </div>
+           
+        </div>
+
+        <div class="cards-single">
+            <div class="card-flex">
+             <div class="card-info">
+                 <div class="card-head">
+                    <span>Users Count</span>
+                 </div>
+                 <h2>80390</h2>
+                 <small>Total users signed up to witcher</small>
+             </div>
+             <div class="card-chart">
+                <span class="las la-chart-line"></span>
+             </div>
+            </div>
+           
+        </div>
+    </div>
+   </div>
+
+
+
+</body>
+</html>

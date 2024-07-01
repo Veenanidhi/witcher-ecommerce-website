@@ -19,53 +19,55 @@ import java.util.logging.Logger;
 @Controller
 public class AccountController {
 
-    public static final Logger log= (Logger) LoggerFactory.getLogger(AccountController.class);
+    public static final Logger log = (Logger) LoggerFactory.getLogger(AccountController.class);
 
     private final UserService userService;
 
     private final VerificationToken verificationToken;
+
+
     public AccountController(UserService userService, VerificationToken verificationToken) {
         this.userService = userService;
         this.verificationToken = verificationToken;
     }
 
     @InitBinder
-    public void initBinder(WebDataBinder dataBinder){
-        StringTrimmerEditor stringTrimmerEditor=new StringTrimmerEditor(true);
-        dataBinder.registerCustomEditor(String.class,stringTrimmerEditor);
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
 
     @GetMapping
-    public String activation(@RequestParam("token") String token, Model model){
+    public String activation(@RequestParam("token") String token, Model model) {
 
         //create html pge for activation
 
-        VerificationToken verificationToken1=verificationToken(token);
-        if ((verificationToken1==null)){
+        VerificationToken verificationToken1 = verificationToken(token);
+        if ((verificationToken1 == null)) {
             model.addAttribute("message", "your verification token is invalid");
-        }else{
-            User user=verificationToken1.getUser();
+        } else {
+            User user = verificationToken1.getUser();
 
             // if the user acc is not activated
-            if (!user.isEnabled()){
+            if (!user.isEnabled()) {
                 //to get the current timestamp
-                Timestamp currentTimeStamp= new Timestamp(System.currentTimeMillis());
+                Timestamp currentTimeStamp = new Timestamp(System.currentTimeMillis());
                 //check if the token is expired
-                if (verificationToken1.getExpiryDate().before(currentTimeStamp)){
-                    model.addAttribute("message","your verification token has expired:(");
-                }else{
-                   //token is valid
-                   //activate the user acc
-                   user.setEnabled(true);
-                   //update the user
+                if (verificationToken1.getExpiryDate().before(currentTimeStamp)) {
+                    model.addAttribute("message", "your verification token has expired:(");
+                } else {
+                    //token is valid
+                    //activate the user acc
+                    user.setEnabled(true);
+                    //update the user
                     userService.save(user);
-                    model.addAttribute("message","your account activated succesfully!!");
+                    model.addAttribute("message", "your account activated succesfully!!");
                 }
 
-            }else {
+            } else {
                 //the user acc is already activated
-                model.addAttribute("message","your acc is already activated");
+                model.addAttribute("message", "your acc is already activated");
             }
         }
         //add /activation to securityconfig
@@ -74,9 +76,12 @@ public class AccountController {
     }
 
     private VerificationToken verificationToken(String token) {
-        verificationToken.getToken();
-        return verificationToken;
+        if (token.equals(verificationToken.getToken())) {
+            return verificationToken;
+        }
+
+        return null;
+
+
     }
-
-
 }

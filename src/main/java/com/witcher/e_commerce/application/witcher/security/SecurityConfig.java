@@ -1,5 +1,6 @@
 package com.witcher.e_commerce.application.witcher.security;
 
+import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,8 +22,6 @@ public class SecurityConfig {
         return (web) ->
                 web.ignoring().requestMatchers("/static/css/img/**","/style/**","/uploads/**");
     }
-
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception{
