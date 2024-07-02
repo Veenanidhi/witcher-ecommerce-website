@@ -3,6 +3,7 @@ package com.witcher.e_commerce.application.witcher.controller;
 
 import com.witcher.e_commerce.application.witcher.entity.User;
 import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
+import com.witcher.e_commerce.application.witcher.service.TokenService;
 import com.witcher.e_commerce.application.witcher.service.UserService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -17,18 +18,19 @@ import java.sql.Timestamp;
 import java.util.logging.Logger;
 
 @Controller
+
 public class AccountController {
 
     public static final Logger log = (Logger) LoggerFactory.getLogger(AccountController.class);
 
     private final UserService userService;
 
-    private final VerificationToken verificationToken;
+    private final TokenService tokenService;
 
-
-    public AccountController(UserService userService, VerificationToken verificationToken) {
+    public AccountController(UserService userService, VerificationToken verificationToken, TokenService tokenService, VerificationToken verificationToken1) {
         this.userService = userService;
-        this.verificationToken = verificationToken;
+        this.tokenService = tokenService;
+
     }
 
     @InitBinder
@@ -38,7 +40,7 @@ public class AccountController {
     }
 
 
-    @GetMapping
+    @GetMapping("/verify")
     public String activation(@RequestParam("token") String token, Model model) {
 
         //create html pge for activation
@@ -76,12 +78,6 @@ public class AccountController {
     }
 
     private VerificationToken verificationToken(String token) {
-        if (token.equals(verificationToken.getToken())) {
-            return verificationToken;
-        }
-
-        return null;
-
-
+        return tokenService.verificationToken(token);
     }
 }

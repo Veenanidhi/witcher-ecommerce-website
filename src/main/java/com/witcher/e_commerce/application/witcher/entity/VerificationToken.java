@@ -25,6 +25,10 @@ public class VerificationToken {
     public VerificationToken(String token, User user) {
     }
 
+    public VerificationToken() {
+
+    }
+
     public void setExpiryDate(Timestamp timestamp) {
     }
 }

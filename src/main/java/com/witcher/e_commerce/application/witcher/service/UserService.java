@@ -24,6 +24,6 @@ public interface UserService{
 
     VerificationToken findByUser(User user);
 
+    User save(User user);
 
-    void save(User user);
 }
