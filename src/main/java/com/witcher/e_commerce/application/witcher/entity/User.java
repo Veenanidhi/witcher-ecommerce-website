@@ -3,10 +3,7 @@ package com.witcher.e_commerce.application.witcher.entity;
 import com.witcher.e_commerce.application.witcher.service.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
-
-import java.util.Date;
 
 @Entity
 @Data
@@ -19,7 +16,6 @@ public class User {
 
     @Column(name = "username")
     @NotNull(message = "is required")
-    @Size(min = 4, message = "is required")
     private String username;
 
 
@@ -29,11 +25,9 @@ public class User {
 
     @Column
     @NotNull(message = "is required")
-    @Size(min = 6, message = "is required")
     private String password;
 
     @Column(name = "phone_no")
-    @Size(min = 10,max = 10 ,message = "is required")
     private String phone_no;
 
 

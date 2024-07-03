@@ -5,7 +5,7 @@ import com.witcher.e_commerce.application.witcher.entity.User;
 import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
 import com.witcher.e_commerce.application.witcher.service.TokenService;
 import com.witcher.e_commerce.application.witcher.service.UserService;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,19 +15,16 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
-import java.util.logging.Logger;
 
 @Controller
-
+@Slf4j
 public class AccountController {
-
-    public static final Logger log = (Logger) LoggerFactory.getLogger(AccountController.class);
 
     private final UserService userService;
 
     private final TokenService tokenService;
 
-    public AccountController(UserService userService, VerificationToken verificationToken, TokenService tokenService, VerificationToken verificationToken1) {
+    public AccountController(UserService userService, TokenService tokenService) {
         this.userService = userService;
         this.tokenService = tokenService;
 

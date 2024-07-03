@@ -5,6 +5,7 @@ import com.witcher.e_commerce.application.witcher.entity.User;
 import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,6 +14,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
+@Slf4j
 public class EmailService {
 
     private final VerificationTokenRepository verificationTokenRepository;
@@ -20,6 +22,7 @@ public class EmailService {
     private final TemplateEngine templateEngine;
 
     private final JavaMailSender javaMailSender;
+
     public Object sendHtmlMail;
 
     @Autowired
@@ -29,10 +32,12 @@ public class EmailService {
         this.javaMailSender = javaMailSender;
     }
 
+
     public void sendHtmlMail(User user) throws MessagingException{
         VerificationToken verificationToken=verificationTokenRepository.findByUser(user);
         //check if the user has a token
         if(verificationToken !=null){
+            log.info("user verification token {}",verificationToken.getToken());
             String token= verificationToken.getToken();
             Context context= new Context();
             context.setVariable("title","verify your email");
