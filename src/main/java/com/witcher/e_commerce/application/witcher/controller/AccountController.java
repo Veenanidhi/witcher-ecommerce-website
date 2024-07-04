@@ -37,7 +37,7 @@ public class AccountController {
     }
 
 
-    @GetMapping("/verify")
+    @GetMapping("/activation")
     public String activation(@RequestParam("token") String token, Model model) {
 
         //create html pge for activation

@@ -18,7 +18,7 @@ public interface UserService{
 
     void verifyOtp(String number);
 
-    void save(User user, String token);
+    //void save(User user, String token);
 
     VerificationToken findByToken(String token);
 

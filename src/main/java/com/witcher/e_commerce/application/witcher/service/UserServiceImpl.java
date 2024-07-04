@@ -4,6 +4,7 @@ import com.witcher.e_commerce.application.witcher.dao.UserRepository;
 import com.witcher.e_commerce.application.witcher.dao.VerificationTokenRepository;
 import com.witcher.e_commerce.application.witcher.entity.User;
 import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
@@ -47,6 +49,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public User registerUser(User user) {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -56,13 +59,11 @@ public class UserServiceImpl implements UserService{
       else{
           user.setRole(Role.ROLE_ADMIN);
         }
-         userRepository.save(user);
 
-      User user1=new User();
       //to disable new user before activation
-      user1.setEnabled(false);
-
-        Optional<User> saved = Optional.of(save(user1));
+      user.setEnabled(false);
+      log.info("USER BEFORE SAVING :{}",user);
+      Optional<User> saved = Optional.of(save(user));
 
 // Create and save verification token if the user is saved
         saved.ifPresent(u -> {
@@ -117,7 +118,7 @@ public class UserServiceImpl implements UserService{
         return userRepository.save(user);
     }
 
-
+/*
     @Override
     public void save(User user, String token) {
         VerificationToken verificationToken=new VerificationToken(token, user);
@@ -126,6 +127,8 @@ public class UserServiceImpl implements UserService{
         tokenRepository.save(verificationToken);
 
     }
+
+ */
 
     //calculate expiry date
     private Timestamp calculatedExpiryDate(int expiryTimeInMinutes){

@@ -23,12 +23,13 @@ public class VerificationToken {
     private User user;
 
     public VerificationToken(String token, User user) {
+        this.token=token;
+        this.user=user;
     }
 
-    public VerificationToken() {
 
-    }
 
     public void setExpiryDate(Timestamp timestamp) {
+        this.expiryDate=timestamp;
     }
 }

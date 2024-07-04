@@ -1,10 +1,10 @@
 package com.witcher.e_commerce.application.witcher.security;
 
-import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -33,11 +33,11 @@ public class SecurityConfig {
                 )
                 .formLogin(form->
                         form
-                                .loginPage("/login")
+                                .loginPage("/showLogin")
                                 .loginProcessingUrl("/authenticateTheUser")
                                 .permitAll()
                 )
-                .logout(logout-> logout.permitAll()
+                .logout(LogoutConfigurer::permitAll
                 )
                 .exceptionHandling(configurer->
                         configurer.accessDeniedPage("/access-denied")
