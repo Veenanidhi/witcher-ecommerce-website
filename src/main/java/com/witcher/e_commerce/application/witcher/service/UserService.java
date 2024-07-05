@@ -2,8 +2,9 @@ package com.witcher.e_commerce.application.witcher.service;
 
 import com.witcher.e_commerce.application.witcher.entity.User;
 import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService{
+public interface UserService extends UserDetailsService{
 
     User registerUser(User user);
 

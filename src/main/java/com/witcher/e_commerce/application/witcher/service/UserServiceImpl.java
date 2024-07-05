@@ -6,14 +6,15 @@ import com.witcher.e_commerce.application.witcher.entity.User;
 import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -138,12 +139,21 @@ public class UserServiceImpl implements UserService{
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> userOptional= userRepository.findByUsername(username);
+        if (userOptional.isEmpty()){
+            throw new UsernameNotFoundException("User not found with this username" +username);
+        }
+        User user= userOptional.get();
 
-
-
-
-
-
-
-
+        Collection<SimpleGrantedAuthority> authorities= new ArrayList<>();
+        SimpleGrantedAuthority tempAuthority= new SimpleGrantedAuthority(user.getRole().name());
+        authorities.add(tempAuthority);
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                authorities
+        );
+    }
 }
