@@ -45,9 +45,9 @@ public class SecurityConfig {
                 )
                 .formLogin(form ->
                                 form
-                                        .loginPage("/showLogin")
+                                        .loginPage("/login")
                                         .loginProcessingUrl("/authenticateTheUser")
-                        //.defaultSuccessUrl("/landing",true)
+                                            //.defaultSuccessUrl("/landing",true)
 
 
                 )

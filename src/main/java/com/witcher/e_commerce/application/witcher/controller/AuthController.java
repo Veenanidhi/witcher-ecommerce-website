@@ -48,20 +48,20 @@ public class AuthController {
             return "login";
         }
 
-        return "admin/categories";
+        return "landing";
 
     }
 
-    @GetMapping("/product-list")
+     @GetMapping("/product-list")
     public String getProductList(){
         return "product-listing";
     }
 
-    @GetMapping("/categories")
+  /*  @GetMapping("/categories")
     public String getCategory(){
         return "categories";
     }
-
+*/
 
     @GetMapping("/landing")
     public String dashboard() {
