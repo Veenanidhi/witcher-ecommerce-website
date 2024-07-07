@@ -26,17 +26,47 @@ public class AuthController {
     }
 
 
-    @GetMapping("/showLogin")
-    private String showLogin(){
+   /* @GetMapping("/login")
+    public String loginPage(HttpServletRequest request, Principal principal, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            Object authenticatedAttribute = session.getAttribute("authenticated");
+            if (authenticatedAttribute != null && (Boolean) authenticatedAttribute) {
+                return "redirect:/"; // Redirect authenticated users away from the login page
+            }
+            session.removeAttribute("registration");
+        }
+        return "login";
+    }*/
+
+    @GetMapping("/login")
+    public String showLogin(){
 
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication==null || authentication instanceof AnonymousAuthenticationToken){
+        if(authentication==null || authentication instanceof AnonymousAuthenticationToken){
             return "login";
         }
 
-        return  "redirect:/landing";
+        return "admin/categories";
+
     }
+
+    @GetMapping("/product-list")
+    public String getProductList(){
+        return "product-listing";
+    }
+
+    @GetMapping("/categories")
+    public String getCategory(){
+        return "categories";
+    }
+
+
+    @GetMapping("/landing")
+    public String dashboard() {
+        return "landing";
+        }
 
     @GetMapping("/signup")
     public String signUpController(Model model){
@@ -66,6 +96,12 @@ public class AuthController {
         userService.registerUser(theWebUser);
         ra.addFlashAttribute("message","an activation mail is send to ur mail");
         return "redirect:/login";
+    }
+
+    @GetMapping("/access-denied")
+    public String showAccessDenied() {
+
+        return "access-denied";
     }
 
 

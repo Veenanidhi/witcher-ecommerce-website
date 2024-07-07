@@ -3,6 +3,7 @@ package com.witcher.e_commerce.application.witcher.entity;
 import com.witcher.e_commerce.application.witcher.service.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +30,7 @@ public class User implements UserDetails {
 
     @Column(name = "email")
     @NotNull(message = "is required")
+    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
 
     @Getter
