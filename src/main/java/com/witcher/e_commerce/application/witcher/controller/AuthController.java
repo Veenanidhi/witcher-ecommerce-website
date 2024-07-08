@@ -48,7 +48,7 @@ public class AuthController {
             return "login";
         }
 
-        return "landing";
+        return "admin/categories";
 
     }
 
@@ -104,7 +104,6 @@ public class AuthController {
         return "access-denied";
     }
 
-
-
+    
 
 }

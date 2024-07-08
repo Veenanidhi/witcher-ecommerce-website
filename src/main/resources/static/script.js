@@ -1,49 +1,68 @@
-const username = document.getElementById('username').value;
-const email = document.getElementById('email').value;
-const password = document.getElementById('password').value;
-const confirmPassword = document.getElementById('confirmpassword').value;
-const number = document.getElementById('number').value;
-const submitButton = document.getElementById('submit');
-const error = []
-const emailPattern = "^(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%*?&]{8,}$";
-const passwordPattern = "^(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%*?&]{8,}$";
-const form=document.getElementById('form_id');
+  document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('form-id');
 
-submitButton.addEventListener("click",(e)=>{
-     e.preventDefault();
+  const username = document.getElementById('username');
+  const email = document.getElementById('email');
+  const password = document.getElementById('password');
+  const confirmPassword = document.getElementById('confirmPassword');
+  const number = document.getElementById('number');
 
- if(username.trim(" ") === ""){
-  username.textContent="username is invalid";
-  error.push("message")
- }
- 
-   if(emailPattern.test(email)){
- 
-   email.textContent="email not valid";
-   error.push("message")
- }
+  const usernameError = document.getElementById('usernameError');
+  const emailError = document.getElementById('emailError');
+  const passwordError = document.getElementById('passwordError');
+  const confirmPasswordError = document.getElementById('confirmPasswordError');
+  const numberError = document.getElementById('numberError');
 
- if(passwordPattern.test(password)){
-  password.textContent="password invalid";
-  error.push("message")
-  
- }
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
- if(confirmPassword!= password) {
-  confirmPassword.textContent="Passwords do not match";
-  error.push("message")
-} 
+  function validateForm() {
+      const error = [];
+      if (!username.value) {
+          usernameError.textContent = "Username is required.";
+          error.push("username");
+      } else {
+          usernameError.textContent = "";
+      }
+      if (!emailPattern.test(email.value)) {
+          emailError.textContent = "Invalid email format.";
+          error.push("email");
+      } else {
+          emailError.textContent = "";
+      }
+      if (!passwordPattern.test(password.value)) {
+          passwordError.textContent = "Password must be at least 8 characters long and include an uppercase letter, a number, and a special character.";
+          error.push("password");
+      } else {
+          passwordError.textContent = "";
+      }
+      if (password.value !== confirmPassword.value) {
+          confirmPasswordError.textContent = "Passwords do not match.";
+          error.push("confirmPassword");
+      } else {
+          confirmPasswordError.textContent = "";
+      }
+      if (number.value.length > 0 &&  number.value.length!==10) {
+          numberError.textContent = "Number is invalid.";
+          error.push("number");
+      } else {
+          numberError.textContent = "";
+      }
 
-if(number.length!=10){
-  number.textContent("10 digits required");
-  error.push("message");
-}
+      if (error.length > 0) {
+          return false;
+      }
 
- 
-if(errormessages.length===0){
-  form.submit(valid);
-}
-   
+      return true;
+  }
+
+  form.addEventListener('submit', function(event) {
+      console.log("Submitting form");
+      if (!validateForm()) {
+          console.log("FORM NOT VALIDATED")
+          event.preventDefault();
+      }
+  });
 });
 
 

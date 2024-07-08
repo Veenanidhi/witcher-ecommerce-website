@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:background-image="http://www.w3.org/1999/xhtml">
 <head>
     <title>Login</title>
     <meta charset="UTF-8">
@@ -47,10 +47,12 @@
     <div class="image" id="image">
   <div class="min-h-screen bg-cover bg-center flex items-center justify-end">
     <div class="w-full max-w-md p-8 mr-16 bg-white bg-opacity-10 rounded-lg shadow-lg">
-      <div class="w-full max-w-md"> 
-        <img src="/static/img/logo.png">
-  <h1 class="font-sans font-bold text-3xl hover:font-sans-serif">WITCHER</h1>
-  
+        <div class="flex justify-center gap-3">
+            <img class="h-10 w-auto" th:src="@{/img/logo.png}" alt="WITCHER">
+            <h2 class="text-3xl  font-extrabold font-sans text-center ">WITCHER</h2>
+
+        </div>
+
 
   <!--Login Form-->
 <form th:action="@{/login}" class="w-[50%]">
