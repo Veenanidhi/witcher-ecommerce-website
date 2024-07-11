@@ -1,6 +1,6 @@
 package com.witcher.e_commerce.application.witcher.controller;
 
-
+/*
 import com.witcher.e_commerce.application.witcher.entity.Category;
 import com.witcher.e_commerce.application.witcher.entity.Product;
 import com.witcher.e_commerce.application.witcher.service.CategoryService;
@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -85,16 +86,27 @@ public class AdminController {
     }
 
     @PostMapping("/products/add")
-    public String productAdd(@ModelAttribute("product")Product product,
-                             @RequestParam("productImage")MultipartFile ){
+     public String productAdd(@ModelAttribute("product")Product product,
+                              @RequestParam("productImage")MultipartFile file,
+                              @RequestParam("imgName")String imgName)throws IOException {
 
-    }
+
+        Product product1= new Product();
+
+        product1.setId(product.getId());
+        product1.setCategory(String.valueOf(categoryService.getCategoryById(Integer.parseInt(product.getCategory_id())).get()));
+
+
+
+        return "redirect:/products";
+
+   }
 
 
 
 }
 
-
+*/
 
 
 

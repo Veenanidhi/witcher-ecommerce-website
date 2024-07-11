@@ -6,17 +6,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.Getter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.Collections;
 
 @Entity
 @Data
 @Table(name = "users")
-public class User implements UserDetails {
+public class User{
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,32 +52,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(role.name()));
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
+    public boolean isEnabled() {
         return true;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
+    public void setEnabled(boolean b) {
+
     }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Getter
-    private boolean enabled;
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = true;
-    }
-
-
 }

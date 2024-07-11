@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+/*
 @Service
 public class ProductService {
-
     private final ProductRepository productRepository;
     @Autowired
     public ProductService(ProductRepository productRepository) {
@@ -38,4 +37,26 @@ public class ProductService {
         return productRepository.findAllByCategoryId(id);
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+*/
