@@ -52,7 +52,7 @@
                         </div>
 
                         <h2 class="text-lg text-center mt-10 font-sans font-bold mb-3">Sign Up</h2>
-                        <form id="form-id" th:action="@{/processSignUpPage}" th:object="${webUser}" method="post" class="space-y-4">
+                        <form id="form-id" action="#" th:action="@{/processSignUpPage}" th:object="${webUser}" method="post" class="space-y-4">
 
                             <!-- User name -->
                             <div class="relative">
@@ -61,6 +61,7 @@
                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 <div class="text-red-600 absolute flex justify-center w-full" id="usernameError"></div>
                             </div>
+
                             <div th:if="${#fields.hasErrors('username')}"
                                  style="margin-bottom: 25px" class="text-danger">
                                 <ul>
@@ -118,6 +119,9 @@
                                 </button>
                             </div>
                         </form>
+
+                      <!--  <div th:if="${signupError}" th:text="${signupError}"></div>-->
+
                         <div class="mt-4 text-center">
                             <p class="text-sm text-gray-600">
                                 Already have an account?

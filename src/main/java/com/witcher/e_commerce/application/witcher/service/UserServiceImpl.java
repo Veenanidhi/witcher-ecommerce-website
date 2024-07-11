@@ -95,6 +95,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow();
+    }
+
+    @Override
     public Boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
     }

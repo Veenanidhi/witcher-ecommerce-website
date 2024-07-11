@@ -10,7 +10,7 @@ public class Product {
 
     @Id
     @Column(name = "product_id")
-    private int product_id;
+    private Long id;
 
     @Column(name = "product")
     private String product;

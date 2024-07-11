@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:background-image="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Login</title>
+    <title>Login Page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" data-th-href="@{'/css/style.css'}">
@@ -29,9 +29,8 @@
     <!--To add background image-->
     <style>
       #image{
-        width: 1520px;
-            height: 600px;
-            margin-top: 100px;
+        width: 1550px;
+            height: 800px;
             background: url([[@{/img/teejh.png}]]);
             background-size: cover;
             background-repeat: no-repeat;
@@ -44,7 +43,7 @@
 <body>
  
   <!--To add background image make a div and give class a name and style it in head section-->
-    <div class="image" id="image">
+<div class="image" id="image">
   <div class="min-h-screen bg-cover bg-center flex items-center justify-end">
     <div class="w-full max-w-md p-8 mr-16 bg-white bg-opacity-10 rounded-lg shadow-lg">
         <div class="flex justify-center gap-3">
@@ -55,14 +54,42 @@
 
 
   <!--Login Form-->
-<form th:action="@{/login}" class="w-[50%]">
+<form action="#" th:action="@{/authenticateTheUser}" method="post" class="w-[50%]">
+
+    <!---Email-->
+    <div class="m-2">
+        <label class="block">
+            <span class="block text-sm font-medium text-black">Email</span>
+            <!-- Using form state modifiers, the classes can be identical for every input -->
+            <input type="email" name="email" id="email" placeholder="Email" class="mt-1 block w-64 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 
+      disabled:bg-slate-100 disabled:text-slate-100 disabled:border-slate-200 disabled:shadow-none
+      invalid:border-pink-500 invalid:text-pink-600
+      focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+    ">
+        </label>
+    </div>
+
+<!--Password-->
+<div class="m-2">
+    <label class="block">
+        <span class="block text-sm font-medium text-black">Password</span>
+        <!-- Using form state modifiers, the classes can be identical for every input -->
+        <input type="password" name="password" id="password" placeholder="Password" class="mt-1 block w-64 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+      disabled:bg-slate-100 disabled:text-slate-100 disabled:border-slate-200 disabled:shadow-none
+      invalid:border-pink-500 invalid:text-pink-600
+      focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+    ">
+    </label>
+</div>
 
     <!-- Place for messages: error, alert, etc ... -->
     <div class="form-group">
         <div class="col-xs-12">
             <!-- Check for login error -->
             <div th:if="${param.error}" class="alert alert-danger">
-                Invalid username and password.
+                Invalid email and password.
             </div>
             <!-- Check for logout -->
             <div th:if="${param.logout}" class="alert alert-success">
@@ -70,45 +97,21 @@
             </div>
         </div>
     </div>
-    <!---User name-->
-    <div class="m-2">
-        <label class="block">
-            <span class="block text-sm font-medium text-slate-700">Username</span>
-            <!-- Using form state modifiers, the classes can be identical for every input -->
-            <input type="text" name="username" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 
-      disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-      invalid:border-pink-500 invalid:text-pink-600
-      focus:invalid:border-pink-500 focus:invalid:ring-pink-500
-    "/>
-        </label>
-    </div>
-<!--Password-->
-<div class="m-2">
-    <label class="block">
-        <span class="block text-sm font-medium text-slate-700">Password</span>
-        <!-- Using form state modifiers, the classes can be identical for every input -->
-        <input type="text" name="password" class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-      disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-      invalid:border-pink-500 invalid:text-pink-600
-      focus:invalid:border-pink-500 focus:invalid:ring-pink-500
-    "/>
-    </label>
-</div>
 
-    <div class="text-sm">
+<!---Forgot Password-->
+    <div class="text-sm mb-4 text-center">
         <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
     </div>
-   <!--Submit Button-->
-    <div>
-        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log in</button>
-    </div>
 
+   <!--Login/Submit Button-->
+    <div>
+        <button type="submit" class="flex w-64 justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Log in</button>
+    </div>
 </form>
+
 </div>
 </div>
 </div>
-</div>
+
 </body>
 </html>

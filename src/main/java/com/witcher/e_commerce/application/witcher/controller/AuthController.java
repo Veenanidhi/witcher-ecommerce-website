@@ -26,18 +26,7 @@ public class AuthController {
     }
 
 
-   /* @GetMapping("/login")
-    public String loginPage(HttpServletRequest request, Principal principal, Model model) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            Object authenticatedAttribute = session.getAttribute("authenticated");
-            if (authenticatedAttribute != null && (Boolean) authenticatedAttribute) {
-                return "redirect:/"; // Redirect authenticated users away from the login page
-            }
-            session.removeAttribute("registration");
-        }
-        return "login";
-    }*/
+
 
     @GetMapping("/login")
     public String showLogin(){
@@ -48,8 +37,14 @@ public class AuthController {
             return "login";
         }
 
-        return "admin/categories";
+        return "redirect:/landing";
 
+    }
+
+    @GetMapping("/login-error")
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "login";
     }
 
      @GetMapping("/product-list")
@@ -57,14 +52,9 @@ public class AuthController {
         return "product-listing";
     }
 
-  /*  @GetMapping("/categories")
-    public String getCategory(){
-        return "categories";
-    }
-*/
 
     @GetMapping("/landing")
-    public String dashboard() {
+    public String landingPage() {
         return "landing";
         }
 
@@ -107,3 +97,15 @@ public class AuthController {
     
 
 }
+/* @GetMapping("/login")
+    public String loginPage(HttpServletRequest request, Principal principal, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            Object authenticatedAttribute = session.getAttribute("authenticated");
+            if (authenticatedAttribute != null && (Boolean) authenticatedAttribute) {
+                return "redirect:/"; // Redirect authenticated users away from the login page
+            }
+            session.removeAttribute("registration");
+        }
+        return "login";
+    }*/

@@ -1,9 +1,6 @@
 package com.witcher.e_commerce.application.witcher.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -12,8 +9,9 @@ import lombok.Data;
 public class Category {
 
     @Id
-    @Column(name = "cart_id")
-    private int cart_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "category_id")
+    private int id;
 
     @Column(name = "product_id")
     private int product_id;
@@ -24,6 +22,19 @@ public class Category {
     @Column(name = "user_id")
     private int user_id;
 
+    @Column(name = "category_name")
+    private String name;
 
+    @Column(name = "sold")
+    private String sold;
+
+    @Column(name = "stock")
+    private String stock;
+
+    @Column(name = "added")
+    private String added;
+
+    @Column(name = "action")
+    private Boolean action;
 
 }
