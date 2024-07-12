@@ -24,7 +24,7 @@ public class User{
 
     @Column(name = "email")
     @NotNull(message = "is required")
-    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+    @Pattern(regexp="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email format")
     private String email;
 
     @Getter
@@ -40,8 +40,7 @@ public class User{
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "status")
-    private Boolean status;
+    private boolean isEnabled = false;
 
     public void setRole(Role role) {
         this.role = role;
@@ -53,10 +52,12 @@ public class User{
     }
 
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 
-    public void setEnabled(boolean b) {
-
+    public void setEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 }
+
+

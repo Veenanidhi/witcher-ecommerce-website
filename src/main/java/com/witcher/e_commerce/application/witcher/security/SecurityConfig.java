@@ -40,7 +40,7 @@ public class SecurityConfig {
                 web.ignoring().requestMatchers("/static/css/img/**","/style/**","/uploads/**","/templates");
     }
 
-    @Bean
+   /* @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:8080"));
@@ -49,7 +49,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/", configuration);
         return source;
     }
-
+*/
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception{
