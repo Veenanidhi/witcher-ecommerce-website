@@ -41,7 +41,7 @@ public class EmailService {
             String token= verificationToken.getToken();
             Context context= new Context();
             context.setVariable("title","verify your email");
-            context.setVariable("link","http://localhost:8093/activation?token=" +token);
+            context.setVariable("link","http://localhost:8080/activation?token=" +token);
 
             //create an html template and pass the variables to it
             String body= templateEngine.process("verification",context);

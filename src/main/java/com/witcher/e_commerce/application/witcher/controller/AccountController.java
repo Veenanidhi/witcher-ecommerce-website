@@ -53,9 +53,12 @@ public class AccountController {
                 //to get the current timestamp
                 Timestamp currentTimeStamp = new Timestamp(System.currentTimeMillis());
                 //check if the token is expired
-                if (verificationToken1.getExpiryDate().before(currentTimeStamp)) {
+                if (verificationToken1.getExpiryDate() != null && verificationToken1.getExpiryDate().before(currentTimeStamp)) {
                     model.addAttribute("message", "your verification token has expired:(");
-                } else {
+                } else if (verificationToken1.getExpiryDate() == null) {
+                model.addAttribute("message", "Invalid verification token: no expiry date set.");
+            }
+                else {
                     //token is valid
                     //activate the user acc
                     user.setEnabled(true);

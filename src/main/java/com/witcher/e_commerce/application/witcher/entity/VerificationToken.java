@@ -18,6 +18,7 @@ public class VerificationToken {
 
     @Column(name = "expiry_date")
     private Timestamp expiryDate;
+
     @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinColumn(name ="user_id", referencedColumnName = "id")
     private User user;
@@ -27,9 +28,12 @@ public class VerificationToken {
         this.user=user;
     }
 
-
-
     public void setExpiryDate(Timestamp timestamp) {
         this.expiryDate=timestamp;
+    }
+
+
+    public VerificationToken(){
+
     }
 }
