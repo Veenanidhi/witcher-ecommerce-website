@@ -79,7 +79,7 @@
                             <div th:if="${#fields.hasErrors('email')}"
                                  style="margin-bottom: 25px" class="text-danger">
                                 <ul>
-                                    <li th:each="err : ${#fields.errors('email')}" th:text="'Email ' + ${err}" />
+                                    <li th:each="err : ${#fields.errors('email')}" th:text="'Email ' + ${err}"></li>
                                 </ul>
                             </div>
                             <!-- Password -->
@@ -99,12 +99,12 @@
                             <div th:if="${#fields.hasErrors('password')}"
                                  style=" margin-bottom: 25px" class="text-danger">
                                 <ul>
-                                    <li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}" />
+                                    <li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}"></li>
                                 </ul>
                             </div>
                             <!-- number-->
                               <div class="relative">
-                                <label for="number" class="block text-sm font-medium text-gray-700">Phone number(optional)</label>
+                                <label for="number" class="block text-sm font-medium text-gray-700">Phone number</label>
                                 <input type="number"  th:field="*{phone_no}" id="number" name="number"
                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                 <div class="text-red-600 flex justify-center w-full" id="numberError"></div>
