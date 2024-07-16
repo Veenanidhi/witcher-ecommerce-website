@@ -1,6 +1,7 @@
 package com.witcher.e_commerce.application.witcher.controller;
 
 import com.witcher.e_commerce.application.witcher.entity.User;
+import com.witcher.e_commerce.application.witcher.service.EmailService;
 import com.witcher.e_commerce.application.witcher.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -20,9 +21,12 @@ public class AuthController {
 
     private final UserService userService;
 
+    private final EmailService emailService;
+
     @Autowired
-    public AuthController(UserService userService){
+    public AuthController(UserService userService, EmailService emailService){
         this.userService=userService;
+        this.emailService = emailService;
     }
 
 

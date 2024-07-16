@@ -46,24 +46,28 @@ public class AccountController {
             model.addAttribute("message", "Your verification token is invalid");
         } else {
             User user = verificationToken.getUser();
-
-            if (!user.isEnabled()) {
-                LocalDate currentDate = LocalDate.now();
-                LocalDate expiryDate = verificationToken.getExpiryDate().toInstant(ZoneOffset.UTC).atZone(ZoneId.systemDefault()).toLocalDate();
-
-                if (currentDate.isBefore(expiryDate) || currentDate.isEqual(expiryDate)) {
-                    user.setEnabled(true);
-                    userService.save(user);
-                    model.addAttribute("message", "Your account has been activated successfully!");
-                } else {
-                    model.addAttribute("error", "Your activation link has expired. Please request a new one.");
-                }
+            if (user == null) {
+                model.addAttribute("error", "No user associated with this verification token");
             } else {
-                model.addAttribute("message", "Your account is already activated.");
+                if (!user.isEnabled()) {
+                    LocalDate currentDate = LocalDate.now();
+                    LocalDate expiryDate = verificationToken.getExpiryDate().toInstant(ZoneOffset.UTC).atZone(ZoneId.systemDefault()).toLocalDate();
+
+                    if (currentDate.isBefore(expiryDate) || currentDate.isEqual(expiryDate)) {
+                        user.setEnabled(true);
+                        userService.save(user);
+                        model.addAttribute("message", "Your account has been activated successfully!");
+                    } else {
+                        model.addAttribute("error", "Your activation link has expired. Please request a new one.");
+                    }
+                } else {
+                    model.addAttribute("message", "Your account is already activated.");
+                }
             }
         }
         return "activation";
     }
+
 
 }
 

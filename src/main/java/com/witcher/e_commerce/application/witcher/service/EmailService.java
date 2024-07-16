@@ -17,7 +17,6 @@ import org.thymeleaf.context.Context;
 @Slf4j
 public class EmailService {
 
-    public final VerificationTokenService verificationTokenService;
 
     private final VerificationTokenRepository verificationTokenRepository;
 
@@ -25,22 +24,12 @@ public class EmailService {
 
     private final JavaMailSender javaMailSender;
 
-    private final VerificationToken verificationToken;
-
-    private final UserService userService;
-
-    public Object sendHtmlMail;
 
     @Autowired
-    public EmailService(VerificationTokenRepository verificationTokenRepository, TemplateEngine templateEngine, JavaMailSender javaMailSender, VerificationToken verificationToken, VerificationTokenService verificationTokenService, VerificationToken verificationToken1, UserService userService, Object sendHtmlMail) {
+    public EmailService(VerificationTokenRepository verificationTokenRepository, TemplateEngine templateEngine, JavaMailSender javaMailSender) {
         this.verificationTokenRepository = verificationTokenRepository;
         this.templateEngine = templateEngine;
         this.javaMailSender = javaMailSender;
-        this.verificationTokenService = verificationTokenService;
-
-        this.verificationToken = verificationToken1;
-        this.userService = userService;
-        this.sendHtmlMail = sendHtmlMail;
     }
 
 

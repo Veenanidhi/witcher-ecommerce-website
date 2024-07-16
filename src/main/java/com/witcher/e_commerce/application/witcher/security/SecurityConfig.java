@@ -2,7 +2,6 @@ package com.witcher.e_commerce.application.witcher.security;
 
 import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
 import com.witcher.e_commerce.application.witcher.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -18,6 +17,11 @@ public class SecurityConfig {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public VerificationToken verificationToken() {
+        return new VerificationToken();
     }
 
     @Bean

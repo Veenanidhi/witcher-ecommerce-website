@@ -5,8 +5,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService{
 
-    User registerUser(User user);
-
     User findById(Long id);
 
     void deleteById(Long id);
@@ -14,6 +12,8 @@ public interface UserService extends UserDetailsService{
     User findByUsername(String username);
 
     User findByEmail(String email);
+
+    User registerUser(User user);
 
     Boolean existsByUsername(String username);
 

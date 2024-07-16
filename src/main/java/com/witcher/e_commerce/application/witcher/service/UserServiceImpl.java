@@ -4,13 +4,13 @@ import com.witcher.e_commerce.application.witcher.dao.UserRepository;
 import com.witcher.e_commerce.application.witcher.dao.VerificationTokenRepository;
 import com.witcher.e_commerce.application.witcher.entity.User;
 import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -23,21 +23,21 @@ public class UserServiceImpl implements UserService{
 
     private final PasswordEncoder passwordEncoder;
 
-    private final VerificationTokenRepository tokenRepository;
-
     private final VerificationTokenService verificationTokenService;
 
-    private EmailService emailService;
+    private final VerificationTokenRepository tokenRepository;
+
+    private final EmailService emailService;
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder, VerificationTokenRepository tokenRepository, VerificationTokenService verificationTokenService, EmailService emailService){
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder, VerificationTokenService tokenService, VerificationTokenRepository tokenRepository, EmailService emailService){
         this.userRepository=userRepository;
         this.passwordEncoder=bCryptPasswordEncoder;
-        this.tokenRepository = tokenRepository;
-        this.verificationTokenService = verificationTokenService;
-        this.emailService=emailService;
 
+        this.verificationTokenService = tokenService;
+        this.tokenRepository = tokenRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -58,16 +58,16 @@ public class UserServiceImpl implements UserService{
         if (userRepository.count() >1){
             user.setRole(Role.ROLE_USER);
         }
-      else{
-          user.setRole(Role.ROLE_ADMIN);
+        else{
+            user.setRole(Role.ROLE_ADMIN);
         }
 
-      //to disable new user before activation
-      user.setEnabled(false);
-      log.info("USER BEFORE SAVING :{}",user);
-      Optional<User> saved = Optional.of( save(user));
+        //to disable new user before activation
+        user.setEnabled(false);
+        log.info("USER BEFORE SAVING :{}",user);
+        Optional<User> saved = Optional.of( save(user));
 
-    // Create and save verification token if the user is saved
+        // Create and save verification token if the user is saved
         saved.ifPresent(u -> {
             try {
                 String token = UUID.randomUUID().toString();
@@ -84,9 +84,6 @@ public class UserServiceImpl implements UserService{
         return saved.get();
 
     }
-
-
-
 
     @Override
     public void deleteById(Long id) {
@@ -116,6 +113,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User save(User user) {
+        if(userRepository.existsByEmail(user.getEmail())){
+            throw new IllegalArgumentException("A user with this email already exists");
+        }
         return userRepository.save(user);
     }
 
