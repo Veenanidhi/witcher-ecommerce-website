@@ -2,8 +2,7 @@ package com.witcher.e_commerce.application.witcher.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name ="verification_token")
@@ -16,24 +15,33 @@ public class VerificationToken {
 
     private String token;
 
+
     @Column(name = "expiry_date")
-    private Timestamp expiryDate;
+    private LocalDateTime expiryDate;
+
 
     @OneToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-    @JoinColumn(name ="user_id", referencedColumnName = "id")
+    @JoinColumn(name ="id", referencedColumnName = "id")
     private User user;
 
+
+    public VerificationToken() {
+        this.expiryDate = LocalDateTime.now().plusDays(1);
+    }
+
     public VerificationToken(String token, User user) {
-        this.token=token;
-        this.user=user;
+        this.token = token;
+        this.user = user;
+        this.expiryDate = LocalDateTime.now().plusDays(1);  // Set expiry to 1 day from now
     }
 
-    public void setExpiryDate(Timestamp timestamp) {
-        this.expiryDate=timestamp;
+    public LocalDateTime getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(LocalDateTime expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
 
-    public VerificationToken(){
-
-    }
 }

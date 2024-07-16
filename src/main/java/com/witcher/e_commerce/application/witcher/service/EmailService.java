@@ -17,19 +17,30 @@ import org.thymeleaf.context.Context;
 @Slf4j
 public class EmailService {
 
+    public final VerificationTokenService verificationTokenService;
+
     private final VerificationTokenRepository verificationTokenRepository;
 
     private final TemplateEngine templateEngine;
 
     private final JavaMailSender javaMailSender;
 
+    private final VerificationToken verificationToken;
+
+    private final UserService userService;
+
     public Object sendHtmlMail;
 
     @Autowired
-    public EmailService(VerificationTokenRepository verificationTokenRepository, TemplateEngine templateEngine, JavaMailSender javaMailSender) {
+    public EmailService(VerificationTokenRepository verificationTokenRepository, TemplateEngine templateEngine, JavaMailSender javaMailSender, VerificationToken verificationToken, VerificationTokenService verificationTokenService, VerificationToken verificationToken1, UserService userService, Object sendHtmlMail) {
         this.verificationTokenRepository = verificationTokenRepository;
         this.templateEngine = templateEngine;
         this.javaMailSender = javaMailSender;
+        this.verificationTokenService = verificationTokenService;
+
+        this.verificationToken = verificationToken1;
+        this.userService = userService;
+        this.sendHtmlMail = sendHtmlMail;
     }
 
 
@@ -40,7 +51,7 @@ public class EmailService {
             log.info("user verification token {}",verificationToken.getToken());
             String token= verificationToken.getToken();
             Context context= new Context();
-            context.setVariable("title","verify your email");
+            context.setVariable("title","Verify your email address");
             context.setVariable("link","http://localhost:8080/activation?token=" +token);
 
             //create an html template and pass the variables to it

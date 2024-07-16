@@ -12,9 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,15 +25,17 @@ public class UserServiceImpl implements UserService{
 
     private final VerificationTokenRepository tokenRepository;
 
+    private final VerificationTokenService verificationTokenService;
+
     private EmailService emailService;
 
 
-
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder, VerificationTokenRepository tokenRepository, EmailService emailService){
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder, VerificationTokenRepository tokenRepository, VerificationTokenService verificationTokenService, EmailService emailService){
         this.userRepository=userRepository;
         this.passwordEncoder=bCryptPasswordEncoder;
         this.tokenRepository = tokenRepository;
+        this.verificationTokenService = verificationTokenService;
         this.emailService=emailService;
 
     }
@@ -66,12 +65,13 @@ public class UserServiceImpl implements UserService{
       //to disable new user before activation
       user.setEnabled(false);
       log.info("USER BEFORE SAVING :{}",user);
-      Optional<User> saved = Optional.of(save(user));
+      Optional<User> saved = Optional.of( save(user));
 
     // Create and save verification token if the user is saved
         saved.ifPresent(u -> {
             try {
                 String token = UUID.randomUUID().toString();
+                verificationTokenService.setExpiry(user, token);
                 VerificationToken verificationToken = new VerificationToken(token,u);
                 tokenRepository.save(verificationToken);
 
@@ -85,35 +85,6 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    // To set expiry date
-    public void setExpiry(User user, String token) {
-       VerificationToken verificationToken= new VerificationToken(token, user);
-
-       Calendar cal= Calendar.getInstance();
-       cal.add(Calendar.HOUR, 24);
-       verificationToken.setExpiryDate(new Timestamp(cal.getTime().getTime()));
-
-       tokenRepository.save(verificationToken);
-    }
-
-    public VerificationResult verifyToken(String token){
-        VerificationToken verificationToken=tokenRepository.findByToken(token);
-
-        if (verificationToken == null) {
-            return VerificationResult.TOKEN_INVALID;
-        }
-
-        if (new Date().after(verificationToken.getExpiryDate())) {
-            return VerificationResult.TOKEN_EXPIRED;
-        }
-            // Token is valid and not expired, proceed with user verification
-            User user = verificationToken.getUser();
-            user.setEnabled(true);
-            // Update user in database
-            // Remove or invalidate the used token
-
-            return VerificationResult.TOKEN_VALID;
-        }
 
 
 
@@ -143,38 +114,9 @@ public class UserServiceImpl implements UserService{
 
     }
 
-
-    @Transactional
-    public VerificationToken findByToken(String token){
-        return tokenRepository.findByToken(token);
-    }
-    @Transactional
-    public VerificationToken findByUser(User user){
-        return tokenRepository.findByUser(user);
-    }
-
     @Override
     public User save(User user) {
         return userRepository.save(user);
-    }
-
-/*
-    @Override
-    public void save(User user, String token) {
-        VerificationToken verificationToken=new VerificationToken(token, user);
-        //set expiry date to 24 hrs
-        verificationToken.setExpiryDate(calculatedExpiryDate(24*60));
-        tokenRepository.save(verificationToken);
-
-    }
-
- */
-
-    //calculate expiry date
-    private Timestamp calculatedExpiryDate(int expiryTimeInMinutes){
-        Calendar calendar= Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, expiryTimeInMinutes);
-        return new Timestamp(calendar.getTime().getTime());
     }
 
 
