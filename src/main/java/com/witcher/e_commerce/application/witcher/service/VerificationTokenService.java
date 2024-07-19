@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 @Service
 public class VerificationTokenService {
 
@@ -30,19 +28,32 @@ public class VerificationTokenService {
     @Transactional
     public void save(User user, String token){
         VerificationToken verificationToken= new VerificationToken(token, user);
-        // set expiry date o 24 hrs
         verificationTokenRepository.save(verificationToken);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // To calculate expiry date
-    public void setExpiry(User user, String token) {
+  /*  public void setExpiry(User user, String token) {
         VerificationToken verificationToken= new VerificationToken(token, user);
 
         LocalDateTime expiryDate = LocalDateTime.now().plusHours(24);
         verificationToken.setExpiryDate(expiryDate);
         verificationTokenRepository.save(verificationToken);
     }
-
+*/
 
 
 }

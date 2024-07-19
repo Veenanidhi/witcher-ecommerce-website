@@ -17,8 +17,7 @@ public interface UserService extends UserDetailsService{
 
     Boolean existsByUsername(String username);
 
-
-    void verifyOtp(String number);
+    Boolean existsByEmail(String email);
 
 
     User save(User user);

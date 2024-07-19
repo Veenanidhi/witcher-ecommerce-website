@@ -71,7 +71,6 @@ public class UserServiceImpl implements UserService{
         saved.ifPresent(u -> {
             try {
                 String token = UUID.randomUUID().toString();
-                verificationTokenService.setExpiry(user, token);
                 VerificationToken verificationToken = new VerificationToken(token,u);
                 tokenRepository.save(verificationToken);
 
@@ -107,16 +106,16 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void verifyOtp(String number) {
-
+    public Boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
+
 
     @Override
     public User save(User user) {
-        if(userRepository.existsByEmail(user.getEmail())){
-            throw new IllegalArgumentException("A user with this email already exists");
-        }
-        return userRepository.save(user);
+       return userRepository.save(user);
+
+
     }
 
 

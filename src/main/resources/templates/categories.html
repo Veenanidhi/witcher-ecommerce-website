@@ -2,7 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Categories</title>
-    <!-- Add other head elements here -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div class="bg-gray-100">
@@ -20,7 +24,7 @@
                             Bracelets
                         </a>
                     </h3>
-                    <p class="text-base font-semibold text-gray-900">accessories</p>
+                    <p class="text-base font-semibold text-gray-900">Accessories</p>
                 </div>
                 <div class="group relative">
                     <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
@@ -29,10 +33,10 @@
                     <h3 class="mt-6 text-sm text-gray-500">
                         <a href="#">
                             <span class="absolute inset-0"></span>
-                            accessories
+                            Accessories
                         </a>
                     </h3>
-                    <p class="text-base font-semibold text-gray-900">Journals and note-taking</p>
+                    <p class="text-base font-semibold text-gray-900">Journals and Note-taking</p>
                 </div>
                 <div class="group relative">
                     <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
@@ -41,10 +45,10 @@
                     <h3 class="mt-6 text-sm text-gray-500">
                         <a href="#">
                             <span class="absolute inset-0"></span>
-                            accessories
+                            Accessories
                         </a>
                     </h3>
-                    <p class="text-base font-semibold text-gray-900">Daily commute essentials</p>
+                    <p class="text-base font-semibold text-gray-900">Daily Commute Essentials</p>
                 </div>
             </div>
         </div>
@@ -52,7 +56,7 @@
 </div>
 
 <div class="container">
-    <a th:href="@{/admin/categories/add}" style="" class="text-blue-600 visited:text-purple-600"> Add Category</a>
+    <a th:href="@{/admin/categories/add}" method="post" th:object="${category}" class="text-blue-600 visited:text-purple-600">Add Category</a>
     <table class="table-auto">
         <thead>
         <tr>
@@ -64,13 +68,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr th:each="category : ${categories}">
             <td th:text="${category.name}">Watch</td>
             <td th:text="${category.sold}">233</td>
             <td th:text="${category.stock}">33</td>
-            <td th:text="${category.added}">24 jun 2023</td>
-            <td><a th:href="@{/admin/categories/delete/{id}(id=${category.id})}"> Delete </a></td>
-            <td><a th:href="@{/admin/categories/update/{id}(id=${category.id})}"> Update </a></td>
+            <td th:text="${category.added}">24 Jun 2023</td>
+            <td><a th:href="@{/admin/categories/delete/{id}(id=${category.id})}">Delete</a></td>
+            <td><a th:href="@{/admin/categories/update/{id}(id=${category.id})}">Update</a></td>
         </tr>
         </tbody>
     </table>

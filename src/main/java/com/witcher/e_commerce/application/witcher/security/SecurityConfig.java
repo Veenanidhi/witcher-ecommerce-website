@@ -1,7 +1,9 @@
 package com.witcher.e_commerce.application.witcher.security;
 
 import com.witcher.e_commerce.application.witcher.entity.VerificationToken;
+import com.witcher.e_commerce.application.witcher.service.CustomSuccessHandler;
 import com.witcher.e_commerce.application.witcher.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,6 +15,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
+    private final CustomSuccessHandler customSuccessHandler;
+    @Autowired
+    public SecurityConfig(CustomSuccessHandler customSuccessHandler) {
+        this.customSuccessHandler = customSuccessHandler;
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
@@ -37,7 +45,7 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer securityCustomizer(){
         return (web) ->
-                web.ignoring().requestMatchers("/static/css/img/**","/style/**","/uploads/**","/templates","/static/script.js");
+                web.ignoring().requestMatchers("/static/css/img/**","/style/**","/uploads/**","/templates/**","/static/script.js");
     }
 
    /* @Bean
@@ -54,8 +62,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception{
         http.authorizeHttpRequests(auth->
-                        auth.requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
+                        auth.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                                .requestMatchers("/user/**").hasAuthority("ROLE_USER")
                                 .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated()
                 )
@@ -64,8 +72,7 @@ public class SecurityConfig {
                                         .loginPage("/login")
                                         .loginProcessingUrl("/authenticateTheUser")
                                         .usernameParameter("email")
-                        .defaultSuccessUrl("/landing",true)
-
+                                        .successHandler(customSuccessHandler).permitAll()
 
                 )
                 .logout(logout->

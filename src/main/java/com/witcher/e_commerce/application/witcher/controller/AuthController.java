@@ -45,16 +45,14 @@ public class AuthController {
 
     }
 
+
+
     @GetMapping("/login-error")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
         return "login";
     }
 
-     @GetMapping("/product-list")
-    public String getProductList(){
-        return "product-listing";
-    }
 
 
     @GetMapping("/landing")
@@ -65,7 +63,6 @@ public class AuthController {
     @GetMapping("/signup")
     public String signUpController(Model model){
         model.addAttribute("webUser", new User());
-        userService.verifyOtp("1234");
         return "signup";
 
     }
@@ -79,11 +76,17 @@ public class AuthController {
 
 
         //to check the username is already taken
-        Boolean existingUser=userService.existsByUsername(theWebUser.getUsername());
+        boolean existingUser=userService.existsByUsername(theWebUser.getUsername());
         if (existingUser){
             theModel.addAttribute("webUser",new User());
             theModel.addAttribute("signupError","Username already exists!!!");
             return "redirect:/signup";
+        }
+
+        boolean existingEmail= userService.existsByEmail(theWebUser.getEmail());
+        if (existingEmail){
+            theModel.addAttribute("message","Email already exists");
+            return "signup";
         }
 
         //save the new user

@@ -1,39 +1,61 @@
 package com.witcher.e_commerce.application.witcher.controller;
 
-/*
+
 import com.witcher.e_commerce.application.witcher.entity.Category;
-import com.witcher.e_commerce.application.witcher.entity.Product;
-import com.witcher.e_commerce.application.witcher.service.CategoryService;
-import com.witcher.e_commerce.application.witcher.service.ProductService;
+import com.witcher.e_commerce.application.witcher.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Optional;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
     private final CategoryService categoryService;
-
-    private final ProductService productService;
-
     @Autowired
+    public AdminController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
+    @GetMapping("/dashboard")
+    public String adminHome(){
+        return "admin-page";
+    }
+
+
+    @GetMapping("/categories")
+    public String showCategory(Model model){
+        List<Category> categories= categoryService.findAll();
+        model.addAttribute("categories", categories);
+        return "categories";
+    }
+    @GetMapping("/product-list")
+    public String getProductList(){
+        return "product-listing";
+    }
+
+
+
+
+
+}
+
+    //   private final CategoryService categoryService;
+
+ //   private final ProductService productService;
+
+ /*   @Autowired
     public AdminController(CategoryService categoryService, ProductService productService) {
         this.categoryService = categoryService;
         this.productService = productService;
     }
 
-    @GetMapping("/admin")
-    public String adminHome(){
-        return "admin";
-    }
 
-    @GetMapping("/categories")
+
+     @GetMapping("/categories")
     public String categoriesPage(Model model){
         model.addAttribute("categories", categoryService.getAllCategory());
         return "categories";
@@ -101,12 +123,13 @@ public class AdminController {
         return "redirect:/products";
 
    }
-
-
-
-}
-
+   }
 */
+
+
+
+
+
 
 
 
