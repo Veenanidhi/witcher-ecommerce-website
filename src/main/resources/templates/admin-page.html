@@ -11,7 +11,8 @@
 <body class="bg-gray-200">
 <div class="flex">
     <!-- Sidebar -->
-    <nav class="bg-indigo-600 text-white w-64 h-screen p-4 flex flex-col">
+
+    <nav class="bg-gray-800 text-white w-64 h-screen p-4 flex flex-col">
         <!-- Main navigation items -->
         <div class="flex-grow">
           <ul class="space-y-2">
@@ -26,13 +27,13 @@
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
               </svg>
-              <a th:href="@{/product-listing}">Products</a>
+              <a th:href="@{/admin/products}">Products</a>
             </li>
             <li class="flex items-center space-x-3">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
               </svg>
-              <a th:href="@{/categories}">Category</a>
+              <a th:href="@{/admin/categories}">Category</a>
               <span class="bg-indigo-500 rounded-full px-2 py-1 text-xs ml-auto">12</span>
             </li>
             <li class="flex items-center space-x-3">
@@ -62,8 +63,8 @@
               </li>
           </ul>
         </div>
-      
-          
+
+
         <!-- Your teams section -->
         <div class="mt-8">
           <h3 class="text-sm font-semibold mb-2">Admin Management</h3>
@@ -107,13 +108,15 @@
       </li>
     </ul>
   </div>
-        
+
         <!-- User profile -->
         <div class="mt-auto pt-4 border-t border-indigo-500 flex items-center">
           <img src="/img/sarah.png" alt="User Avatar" class="w-10 h-10 rounded-full mr-3">
           <span>sarah johnson</span>
         </div>
       </nav>
+
+
 
     <!-- Main content -->
     <main class="flex-1 p-8">

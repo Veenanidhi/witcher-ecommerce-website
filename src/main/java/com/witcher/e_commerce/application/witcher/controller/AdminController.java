@@ -4,6 +4,7 @@ package com.witcher.e_commerce.application.witcher.controller;
 import com.witcher.e_commerce.application.witcher.entity.Category;
 import com.witcher.e_commerce.application.witcher.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,39 +26,9 @@ public class AdminController {
         return "admin-page";
     }
 
-
     @GetMapping("/categories")
     public String showCategory(Model model){
-        List<Category> categories= categoryService.findAll();
-        model.addAttribute("categories", categories);
-        return "categories";
-    }
-    @GetMapping("/product-list")
-    public String getProductList(){
-        return "product-listing";
-    }
-
-
-
-
-
-}
-
-    //   private final CategoryService categoryService;
-
- //   private final ProductService productService;
-
- /*   @Autowired
-    public AdminController(CategoryService categoryService, ProductService productService) {
-        this.categoryService = categoryService;
-        this.productService = productService;
-    }
-
-
-
-     @GetMapping("/categories")
-    public String categoriesPage(Model model){
-        model.addAttribute("categories", categoryService.getAllCategory());
+        model.addAttribute("categories", categoryService.findAll());
         return "categories";
     }
 
@@ -70,61 +41,21 @@ public class AdminController {
     @PostMapping("/categories/add")
     public String postCategory(@ModelAttribute("category") Category category){
         categoryService.addCategory(category);
-        return "redirect:admin/categories";
+        return "redirect:/categories";
     }
 
-    @GetMapping("/categories/delete/{id}")
-    public String deleteCategory(@PathVariable int id){
-        categoryService.removeCategoryById(id);
-
-        return "redirect:admin/categories";
-
-    }
-
-    @GetMapping("/categories/update/{id}")
-    public String updateCategory(@PathVariable int id, Model model){
-        Optional<Category> category= categoryService.getCategoryById(id);
-        if (category.isPresent()){
-            model.addAttribute("category", category.get());
-            return "categoriesAdd";
-        }
-        else {
-            return "not found";
-        }
-
-    }
 
     @GetMapping("/products")
-    public String products(Model model){
-        model.addAttribute("products",productService.getAllProduct());
-        return "products";
+    public String getProductList(){
+        return "product-listing";
     }
 
-    @GetMapping("/products/add")
-    public String addProducts(Model model){
-        model.addAttribute("products", new Product());
-        model.addAttribute("categories", categoryService.getAllCategory());
-        return "productsAdd";
-    }
-
-    @PostMapping("/products/add")
-     public String productAdd(@ModelAttribute("product")Product product,
-                              @RequestParam("productImage")MultipartFile file,
-                              @RequestParam("imgName")String imgName)throws IOException {
-
-
-        Product product1= new Product();
-
-        product1.setId(product.getId());
-        product1.setCategory(String.valueOf(categoryService.getCategoryById(Integer.parseInt(product.getCategory_id())).get()));
 
 
 
-        return "redirect:/products";
 
-   }
-   }
-*/
+}
+
 
 
 
