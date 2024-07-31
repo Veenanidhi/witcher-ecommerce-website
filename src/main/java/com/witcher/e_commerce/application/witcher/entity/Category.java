@@ -18,6 +18,7 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
+    @Getter
     @Column(name = "category_name")
     private String name;
 
@@ -38,14 +39,6 @@ public class Category {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.isDeleted = isDeleted;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getStock() {
@@ -70,6 +63,7 @@ public class Category {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+
     }
 
     public boolean isDeleted() {

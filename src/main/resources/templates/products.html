@@ -38,10 +38,10 @@
             <h2 class="text-xl font-semibold">Menu</h2>
         </div>
         <nav class="mt-4">
-            <a href="#" class="block py-2 px-4 text-gray-600 hover:bg-gray-200">Dashboard</a>
-            <a href="#" class="block py-2 px-4 bg-blue-100 text-blue-600">Products</a>
-            <a href="#" class="block py-2 px-4 text-gray-600 hover:bg-gray-200">Category</a>
-            <a href="#" class="block py-2 px-4 text-gray-600 hover:bg-gray-200">Orders</a>
+            <a th:href="@{/admin/dashboard}" class="block py-2 px-4 text-black hover:bg-blue-100">Dashboard</a>
+            <a th:href="@{/admin/products}" class="block py-2 px-4 bg-blue-100 text-black">Products</a>
+            <a th:href="@{/admin/categories}" class="block py-2 px-4 text-black hover:bg-blue-100">Category</a>
+            <a href="#" class="block py-2 px-4 text-black hover:bg-gray-200">Orders</a>
             <!-- Add other menu items -->
         </nav>
     </aside>
@@ -68,51 +68,54 @@
 
             <table class="w-full">
                 <thead>
-                <tr class="bg-gray-50 text-left">
-                    <th class="p-4">Image</th>
+                <tr class="bg-gray-50 text-center">
+                    <th class="p-4">SI</th>
                     <th class="p-4">Product</th>
-                    <th class="p-4">Product id</th>
+                    <th class="p-4">Image</th>
+                    <th class="p-4">Description</th>
                     <th class="p-4">Category</th>
                     <th class="p-4">Stock</th>
                     <th class="p-4">Price</th>
                     <th class="p-4">Status</th>
                     <th class="p-4">Action</th>
+
+
                 </tr>
                 </thead>
                 <tbody>
                 <!-- Example row, repeat for each product -->
                 <tr  th:each="product, iStat : ${products}">
                     <th scope="row" th:text="${iStat.index + 1}">1</th>
+                    <td th:text="${product.name}"> </td>
+                    <td class="flex items-center ">
+                        <img th:src="@{${'/productImage/' + product.imageName}}">
+                    </td>
+                    <td th:text="${product.description}"> </td>
+                    <td th:text="${product.category}"> </td>
+                    <td th:text="${product.stock}"> </td>
+                    <td th:text="${product.price}"> </td>
+                    <td th:text="${product.status}" class="p-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm"> </span></td>
+                    <td><a href="" th:href="@{/admin/products/delete/{id}(id=${product.id})}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Delete</a></td>
+                    <td><a href="" th:href="@{/admin/products/update/{id}(id=${product.id})}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Update</a></td>
 
-                    <td class="p-4 flex items-center">
-                        <img th:src="@{${'/productImages/' + product.imageName}}" class="w-10 h-10 rounded mr-2" alt="Product Image">
-                    </td>
-                    <td th:text="${product.name}">Larry</td>
-                    <td th:text="${product.id}">Larry</td>
-                    <td th:text="${product.category}">Larry</td>
-                    <td th:text="${product.stock}">Larry</td>
-                    <td th:text="${product.price}">Larry</td>
-                    <td th:text="${product.status}" class="p-4"><span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Published</span></td>
-                    <td>
-                    <td><a href="" th:href="@{/admin/products/delete/{id}(id=${product.id})}" class="btn btn-danger">Delete</a></td>
-                    <td><a href="" th:href="@{/admin/products/update/{id}(id=${product.id})}" class="btn btn-warning">Update</a></td>
-                    </td>
-                    <td class="p-4">
+                </tr>
+                <!-- Repeat rows for other products
+                 <td class="p-4">
                         <button class="text-gray-600 hover:text-blue-600">Edit</button>
                     </td>
-                </tr>
-                <!-- Repeat rows for other products -->
+                    -->
+
                 </tbody>
             </table>
 
             <div class="p-4 flex justify-between items-center">
                 <span>Showing 1-10 from 100</span>
                 <div class="flex space-x-2">
-                    <button class="px-3 py-1 border rounded">1</button>
-                    <button class="px-3 py-1 border rounded">2</button>
-                    <button class="px-3 py-1 border rounded">3</button>
-                    <button class="px-3 py-1 border rounded">4</button>
-                    <button class="px-3 py-1 border rounded">5</button>
+                    <button class="px-3 py-1 border rounded hover:bg-blue-100">1</button>
+                    <button class="px-3 py-1 border rounded hover:bg-blue-100">2</button>
+                    <button class="px-3 py-1 border rounded hover:bg-blue-100">3</button>
+                    <button class="px-3 py-1 border rounded hover:bg-blue-100">4</button>
+                    <button class="px-3 py-1 border rounded hover:bg-blue-100">5</button>
                 </div>
             </div>
         </div>

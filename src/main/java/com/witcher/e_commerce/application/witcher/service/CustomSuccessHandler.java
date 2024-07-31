@@ -30,7 +30,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
          if (roles.orElse(" ").equals("ROLE_ADMIN")){
              response.sendRedirect("/admin/dashboard");
          } else if (roles.orElse(" ").equals("ROLE_USER")) {
-             response.sendRedirect("/landing");
+             response.sendRedirect("/productPage");
          }else{
              response.sendRedirect("/access-denied");
          }

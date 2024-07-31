@@ -27,136 +27,88 @@
     </style>
 </head>
 <body>
-<!--navbar-->
-<nav class="bg-gray-800">
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <!-- Mobile menu button-->
-                <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="absolute -inset-0.5"></span>
-                    <span class="sr-only">Open main menu</span>
-                    <!--
-                      Icon when menu is closed.
 
-                      Menu open: "hidden", Menu closed: "block"
-                    -->
-                    <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                    <!--
-                      Icon when menu is open.
-
-                      Menu open: "block", Menu closed: "hidden"
-                    -->
-                    <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div class="flex flex-shrink-0 items-center">
-                    <img th:src="@{/img/logo.png}" alt="logo" class="w-8 h-8"  >
-
-
-                    <h1 class="ml-4 font-extrabold text-white">WITCHER</h1>
-
-
-                </div>
-                <div class="hidden sm:ml-6 sm:block">
-                    <div class="flex space-x-4 ">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <!-- <a href="#" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Dashboard</a>-->
-                        <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Home</a>
-                        <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Contact</a>
-                        <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">About</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Icons on the right -->
-            <div class="flex items-center space-x-4">
-                <a href="#" class="text-white hover:text-blue-500">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                    </svg>
-                </a>
-                <a href="#" class="text-white hover:text-blue-500">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
-                </a>
-                <a href="#" class="text-white hover:text-blue-500">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                    </svg>
-                </a>
-            </div>
+<div  class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md">
+        <div class="p-4">
+            <h2 class="text-xl font-semibold">Menu</h2>
         </div>
-    </div>
-</nav>
-
-<div class="flex">
-    <!-- Sidebar navigation -->
-    <nav class="w-64 bg-gray-100 h-screen">
-        <!-- Add menu items here -->
-    </nav>
-
+        <nav class="mt-4">
+            <a th:href="@{/admin/dashboard}"  class="block py-2 px-4 text-black hover:bg-blue-100">Dashboard</a>
+            <a th:href="@{/admin/products}" class="block py-2 px-4 text-black hover:bg-blue-100">Products</a>
+            <a th:href="@{/admin/categories}" class="block py-2 px-4 text-black bg-blue-100">Category</a>
+            <a href="#" class="block py-2 px-4 text-black hover:bg-blue-100">Orders</a>
+            <!-- Add other menu items -->
+        </nav>
+    </aside>
     <div class="flex-1">
-        <!-- Top bar -->
         <header class="bg-white shadow">
             <!-- Add search, notifications, and user profile -->
         </header>
-
         <!-- Main content -->
-        <main class="p-6">
-            <div class="flex justify-between items-center mb-4">
+        <main class="flex-1 p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold">Category</h1>
                 <div>
-                    <h1 class="text-2xl font-bold">Categories</h1>
-                    <nav class="text-sm" aria-label="Breadcrumb">
-                        <ol class="list-none p-0 inline-flex">
-                            <li class="flex items-center">
-                                <a href="#" class="text-blue-500">Dashboard</a>
-                                <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
-                            </li>
-                            <li>
-                                <span class="text-gray-500">Categories</span>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
-                <div>
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded">Create Category</button>
+                    <a  th:href="@{/admin/categories/add}" method="post" th:object="${category}" class="bg-blue-500 text-white px-4 py-2 rounded inline-block">+ Add Category</a>
                 </div>
             </div>
 
-            <table class="w-full">
-                <a th:href="@{/admin/categories/add}" method="post" th:object="${category}" class="text-blue-600 visited:text-purple-600">Add Category</a>
+            <div class="bg-white shadow rounded-lg">
+                <!--
+                <div class="p-4 border-b">
+                    <div class="flex space-x-20">
+                        <a href="#" class="text-blue-600">All Products</a>
+                        <a href="#" class="text-gray-600">Published</a>
+                        <a href="#" class="text-gray-600">Low Stock</a>
+                        <a href="#" class="text-gray-600">Draft</a>
+                        <a href="#" class="text-gray-600">Out of Stock</a>
+                    </div>
+                </div>-->
+
+                <table class="w-full">
                     <thead>
-                    <tr>
-                        <th><input type="checkbox"></th>
-                        <th>Category Name</th>
-                        <th>Stock</th>
-                        <th>Created At</th>
-                        <th>Updated At</th>
-                        <th>Action</th>
+                    <tr class="bg-gray-100 text-center">
+                        <th class="p-4">SI</th>
+                        <th class="p-4">Category</th>
+                        <th class="p-4">Stock</th>
+                        <th class="p-4">Created</th>
+                        <th class="p-4">Updated</th>
+                        <th class="p-4">Action</th>
+
                     </tr>
                     </thead>
-                    <tbody >
+                    <tbody class="text-center">
+                    <!-- Example row, repeat for each product -->
                     <tr th:each="category, iStat : ${categories}">
                         <th scope="row" th:text="${iStat.index +1}">1</th>
                         <td th:text="${category.name}"> </td>
                         <td th:text="${category.stock}"> </td>
                         <td th:text="${category.createdAt}"> </td>
                         <td th:text="${category.updatedAt}"> </td>
-                        <td><a th:href="@{/admin/categories/delete/{id}(id=${category.id})}"  class="bg-red-300 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">Delete</a></td>
-                        <td><a th:href="@{/admin/categories/update/{id}(id=${category.id})}"  class="bg-yellow-300 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">Update</a></td>
+                        <td><a th:href="@{/admin/categories/delete/{id}(id=${category.id})}"  class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Delete</a></td>
+                        <td><a th:href="@{/admin/categories/update/{id}(id=${category.id})}"  class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Update</a></td>
                     </tr>
+                    <!-- Repeat rows for other products
+                     <td class="p-4">
+                            <button class="text-gray-600 hover:text-blue-600">Edit</button>
+                        </td>
+                        -->
+
                     </tbody>
                 </table>
 
-            <!-- Pagination -->
-            <div class="mt-4">
-                <!-- Add pagination controls here -->
+                <div class="p-4 flex justify-between items-center">
+                    <span>Showing 1-10 from 100</span>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 border rounded hover:bg-blue-100">1</button>
+                        <button class="px-3 py-1 border rounded hover:bg-blue-100">2</button>
+                        <button class="px-3 py-1 border rounded hover:bg-blue-100">3</button>
+                        <button class="px-3 py-1 border rounded hover:bg-blue-100">4</button>
+                        <button class="px-3 py-1 border rounded hover:bg-blue-100">5</button>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -242,4 +194,9 @@
         </tbody>
     </table>
 </div>
+
+
+
+
+
 -->

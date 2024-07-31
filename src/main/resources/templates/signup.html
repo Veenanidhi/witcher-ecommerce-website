@@ -32,6 +32,7 @@
             background-repeat: no-repeat;
             background-size: half;
             width:100%;
+            height:100%;
         }
     </style>
 </head>
@@ -56,9 +57,9 @@
 
                             <!-- User name -->
                             <div class="relative">
-                                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                                <label for="username" class="block text-sm font-medium text-black">Username</label>
                                 <input type="text"  th:field= "*{username}" id="username" name="username" required
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300">
                                 <div class="text-red-600 absolute flex justify-center w-full" id="usernameError"></div>
                             </div>
 
@@ -70,9 +71,9 @@
                             </div>
                             <!-- email -->
                             <div class="relative">
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                <label for="email" class="block text-sm font-medium text-black">Email</label>
                                 <input type="email" th:field= "*{email}" id="email" name="email" required
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300">
                                 <!--EMPTY DIV FOR VALIDATION-->
                                 <div class="text-red-600 absolute flex justify-center w-full" id="emailError"></div>
                             </div>
@@ -84,15 +85,15 @@
                             </div>
                             <!-- Password -->
                             <div class="relative">
-                                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                                <label for="password" class="block text-sm font-medium text-black">Password</label>
                                 <input type="password" th:field="*{password}" id="password" name="password" required
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300">
                                 <div class="text-red-600 flex justify-center w-full" id="passwordError"></div>
                             </div>
                             <div class="relative">
-                                <label for="password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                                <label for="password" class="block text-sm font-medium text-black">Confirm Password</label>
                                 <input type="password" name="confirm password" required
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300">
                                 <div class="text-red-600 flex justify-center w-full" id="confirmPasswordError"></div>
                             </div>
 
@@ -104,9 +105,9 @@
                             </div>
                             <!-- number-->
                               <div class="relative">
-                                <label for="number" class="block text-sm font-medium text-gray-700">Phone number</label>
+                                <label for="number" class="block text-sm font-medium text-black">Phone number</label>
                                 <input type="number"  th:field="*{phone_no}" id="number" name="number"
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300">
                                 <div class= "text-red-600 flex justify-center w-full" id="numberError"></div>
                             </div>
 

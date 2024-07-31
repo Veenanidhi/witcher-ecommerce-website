@@ -3,6 +3,8 @@ package com.witcher.e_commerce.application.witcher.controller;
 import com.witcher.e_commerce.application.witcher.entity.User;
 import com.witcher.e_commerce.application.witcher.service.EmailService;
 import com.witcher.e_commerce.application.witcher.service.UserService;
+import com.witcher.e_commerce.application.witcher.service.category.CategoryService;
+import com.witcher.e_commerce.application.witcher.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -23,10 +26,16 @@ public class AuthController {
 
     private final EmailService emailService;
 
+    private final CategoryService categoryService;
+
+    private final ProductService productService;
+
     @Autowired
-    public AuthController(UserService userService, EmailService emailService){
+    public AuthController(UserService userService, EmailService emailService, CategoryService categoryService, ProductService productService){
         this.userService=userService;
         this.emailService = emailService;
+        this.categoryService = categoryService;
+        this.productService = productService;
     }
 
 
@@ -41,7 +50,7 @@ public class AuthController {
             return "login";
         }
 
-        return "redirect:/landing";
+        return "redirect:/product-listing";
 
     }
 
@@ -53,12 +62,10 @@ public class AuthController {
         return "login";
     }
 
-
-
-    @GetMapping("/landing")
-    public String landingPage() {
+    @GetMapping("/home")
+    public String showHome(Model model){
         return "landing";
-        }
+    }
 
     @GetMapping("/signup")
     public String signUpController(Model model){
@@ -101,9 +108,58 @@ public class AuthController {
         return "access-denied";
     }
 
+    @GetMapping("/productPage")
+    public String productPage(Model model) {
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("products", productService.getAllProduct());
+        return "product-listing";
+    }
+
+    @GetMapping("/productPage/category/{id}")
+    public String productByCategory(Model model, @PathVariable Long id){
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("products", productService.getAllProductsByCategoryId(id));
+
+        return "product-listing";
+    }
+
+    @GetMapping("/productList/viewProduct/{id}")
+    public String viewProduct(Model model, @PathVariable Long id){
+        model.addAttribute("product", productService.getProductById(id).get());
+        return "view-product";
+    }
+
     
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* @GetMapping("/login")
     public String loginPage(HttpServletRequest request, Principal principal, Model model) {

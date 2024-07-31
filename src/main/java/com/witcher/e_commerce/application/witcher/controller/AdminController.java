@@ -1,6 +1,7 @@
 package com.witcher.e_commerce.application.witcher.controller;
 
 
+import com.witcher.e_commerce.application.witcher.dao.CategoryRepository;
 import com.witcher.e_commerce.application.witcher.entity.Category;
 import com.witcher.e_commerce.application.witcher.entity.Product;
 import com.witcher.e_commerce.application.witcher.service.category.CategoryService;
@@ -25,11 +26,14 @@ public class AdminController {
 
     private final ProductService productService;
 
+    private final CategoryRepository categoryRepository;
+
     public static String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/productImage";
     @Autowired
-    public AdminController(CategoryService categoryService, ProductService productService) {
+    public AdminController(CategoryService categoryService, ProductService productService, CategoryRepository categoryRepository) {
         this.categoryService = categoryService;
         this.productService = productService;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/dashboard")
@@ -52,7 +56,7 @@ public class AdminController {
     @PostMapping("/categories/add")
     public String postCategory(@ModelAttribute("category") Category category){
         categoryService.addCategory(category);
-        return "redirect:/admin-page";
+        return "admin-page";
     }
 
     @GetMapping("/categories/delete/{id}")
@@ -73,7 +77,7 @@ public class AdminController {
 
     }
 
-    //Product Section
+    //Product Section//
     @GetMapping("/products")
     public String adminProductPage(Model model){
         model.addAttribute("products", productService.getAllProduct());
@@ -89,10 +93,11 @@ public class AdminController {
     }
 
 
-@PostMapping("/products/add")
+    @PostMapping("/products/add")
     public String productAddPost(@ModelAttribute("products")Product product,
                                 @RequestParam("productImage") MultipartFile file,
                                  @RequestParam("imgName") String imgName) throws IOException{
+
 
         product.setId(product.getId());
         product.setName(product.getName());
@@ -121,7 +126,33 @@ public class AdminController {
 }
     //requestparam- means when a request is snd athile parameters oke attached ayit snd akn
 
+    @GetMapping("/products/delete/{id}")
+    public String deleteProduct(@PathVariable Long id){
+         productService.removeProductById(id);
+        return "products";
+    }
 
+    @GetMapping("/products/update/{id}")
+    public String updateProduct(@PathVariable Long id, Model model){
+        Product product=productService.getProductById(id).get();
+        product.setId(product.getId());
+        product.setName(product.getName());
+        product.setCategory(categoryService.getCategoryById(id).get());
+        // - problm setcat return type category anu req is long
+        product.setPrice(product.getPrice());
+        product.setStock(product.getStock());
+        product.setDescription(product.getDescription());
+        product.setStatus(product.getStatus());
+        product.setImageName(product.getImageName());
+
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("products", product);
+
+
+        return "productsAdd";
+
+        //here im doing like giving the same pge of productadd for update cpz of same thing happens in update!!!
+    }
 
 
 

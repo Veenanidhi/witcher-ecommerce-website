@@ -21,7 +21,7 @@ public class Product {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+    @JoinColumn(name = "category_id", unique = false)
     private Category category;
 
     @Column(name = "price")
@@ -36,5 +36,15 @@ public class Product {
     private String imageName;
 
     private String description;
+
+    private boolean isDeleted=true;
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+
 
 }

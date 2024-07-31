@@ -34,9 +34,9 @@
     <!-- Sidebar -->
     <aside class="w-64 bg-white h-screen shadow-md">
         <nav class="p-5 space-y-2">
-            <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Dashboard</a>
-            <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Products</a>
-            <a href="#" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Categories</a>
+            <a th:href="@{/admin/dashboard}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Dashboard</a>
+            <a th:href="@{/admin/products}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Products</a>
+            <a th:href="@{/admin/categories}" class="block py-2 px-4 text-gray-700 hover:bg-gray-200 rounded">Categories</a>
             <!-- Add more menu items as needed -->
         </nav>
     </aside>
@@ -50,7 +50,7 @@
 
         <div class="bg-white shadow-md rounded-lg p-6">
             <form th:action="@{/admin/products/add}" method="post" th:object="${products}" enctype="multipart/form-data">
-                <!-- General Information -->
+                <!-- General Information  ectype- encryptiontype -->
                 <div class="mb-6">
                     <h2 class="text-lg font-semibold mb-4">General Information</h2>
                     <div class="mb-4">
@@ -62,20 +62,9 @@
 
                     <div>
                         <label class="block text-sm font-medium mb-1">Description</label>
-                        <textarea placeholder="Type product description here..." class="w-full p-2 border rounded" rows="3"  th:field="*{description}" name="description" id="description"></textarea>
+                        <textarea placeholder="Type product description here..." class="w-full p-2 border rounded" rows="5"  th:field="*{description}" name="description" id="description"></textarea>
                     </div>
                 </div>
-
-                <!-- Media -->
-                <div class="mb-6">
-                    <h2 class="text-lg font-semibold mb-4">Media</h2>
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                        <input type="file"  class="custom-file-input" name="productImage" accept="image/jpeg, image/png"  id="productImage"/>
-                        <label class="custom-file-label" for="productImage">Choose file</label>
-                    </div>
-                    <input type="hidden" name="imgName" th:value="${products.imageName}">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
 
                 <!-- Pricing -->
                 <div class="mb-6">
@@ -84,6 +73,22 @@
                         <div>
                             <label for="price" class="block text-sm font-medium mb-1">Price</label>
                             <input type="number" required th:field="*{price}" name="price" id="price" placeholder="Type base price here..." class="w-full p-2 border rounded">
+                        </div>
+
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="stock" class="block text-sm font-medium mb-1">Stock</label>
+                            <input type="text" required th:field="*{stock}" name="stock" id="stock" placeholder="Type stock here..." class="w-full p-2 border rounded">
+                        </div>
+
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="price" class="block text-sm font-medium mb-1">Status</label>
+                            <input type="text" required th:field="*{status}" name="stock" id="status" placeholder="Type status of product..." class="w-full p-2 border rounded">
                         </div>
 
                     </div>
@@ -101,6 +106,23 @@
                         </select>
 
                     </div>
+                </div>
+
+                <!-- Media -->
+                <div class="mb-12">
+                    <h2 class="text-lg font-semibold mb-4">Image</h2>
+                    <div class=" border-gray-300 rounded-lg p-6 text-center">
+                        <input type="file"  class="custom-file-input" name="productImage" accept="image/jpeg, image/png"  id="productImage"/>
+                        <label class="custom-file-label " for="productImage"></label>
+                    </div>
+                    <div class="form-group">
+                        <img src="#" id="imgPreview" height="200px" width="200px" th:src="@{${'/productImage/' + products.imageName}}" style="margin-top: 20px" alt=" ">
+                    </div>
+                    <input type="hidden" name="imgName" th:value="${products.imageName}">
+                    <div class="mb-6">
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded inline-block">Submit</button>
+                        <div>
+
                 </div>
             </form>
         </div>
